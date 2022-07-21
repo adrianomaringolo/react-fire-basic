@@ -1,19 +1,30 @@
-import { signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { DocumentData } from 'firebase/firestore';
 
-//import { axios } from '@/lib/axios';
+import { UserService } from '@/services/userService';
 import { auth } from '@/utils/firebase';
 
-//import { UserResponse } from '../types';
+import { AuthUser, UserResponse } from '../types';
 
 export type LoginCredentialsDTO = {
   email: string;
   password: string;
 };
 
-export const loginWithEmailAndPassword = (data: LoginCredentialsDTO): Promise<UserCredential> => {
+export const loginWithEmailAndPassword = async (
+  data: LoginCredentialsDTO
+): Promise<UserResponse> => {
   const { email, password } = data;
 
-  return signInWithEmailAndPassword(auth, email, password);
+  const credentials = await signInWithEmailAndPassword(auth, email, password);
+  // eslint-disable-next-line no-debugger
+  debugger;
+  const userData: DocumentData = await UserService.getUserByAuthId(credentials.user.uid);
 
-  //return axios.post('/auth/login', data);
+  const response: UserResponse = {
+    accessToken: await credentials.user.getIdToken(),
+    user: userData as AuthUser,
+  };
+
+  return new Promise((resolve) => resolve(response));
 };

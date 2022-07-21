@@ -10,12 +10,14 @@ import {
   RegisterCredentialsDTO,
   AuthUser,
 } from '@/features/auth';
+import { auth } from '@/utils/firebase';
 import storage from '@/utils/storage';
 
 async function handleUserResponse(data: any) {
-  const { accessToken, user } = data;
-  storage.setToken(accessToken);
-  return user;
+  // eslint-disable-next-line no-debugger
+  debugger;
+  storage.setToken(data.accessToken);
+  return data.user;
 }
 
 async function loadUser() {
@@ -28,8 +30,6 @@ async function loadUser() {
 
 async function loginFn(data: LoginCredentialsDTO) {
   const response = await loginWithEmailAndPassword(data);
-  // eslint-disable-next-line no-debugger
-  debugger;
   const user = await handleUserResponse(response);
   return user;
 }
@@ -42,6 +42,7 @@ async function registerFn(data: RegisterCredentialsDTO) {
 
 async function logoutFn() {
   storage.clearToken();
+  auth.signOut();
   window.location.assign(window.location.origin as unknown as string);
 }
 

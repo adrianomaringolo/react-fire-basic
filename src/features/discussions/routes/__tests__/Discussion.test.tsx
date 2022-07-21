@@ -12,10 +12,10 @@ import {
 
 import { Discussion } from '../Discussion';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // keep the rest of the exports intact
-  useParams: jest.fn(),
-}));
+// jest.mock('react-router-dom', () => ({
+//   ...jest.requireActual('react-router-dom'), // keep the rest of the exports intact
+//   useParams: jest.fn(),
+// }));
 
 const renderDiscussion = async () => {
   const fakeUser = await createUser();

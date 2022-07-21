@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import logo from '@/assets/logo.svg';
@@ -9,6 +10,12 @@ export const Landing = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  useEffect(() => {
+    if (user) {
+      navigate('/app');
+    }
+  }, [navigate, user]);
+
   const handleStart = () => {
     if (user) {
       navigate('/app');
@@ -19,7 +26,7 @@ export const Landing = () => {
 
   return (
     <>
-      <Head description="Welcome to bulletproof react" />
+      <Head description="Welcome to Meta" />
       <div className="bg-white h-[100vh] flex items-center">
         <div className="max-w-7xl mx-auto text-center py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
