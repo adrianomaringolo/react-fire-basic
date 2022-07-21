@@ -10,7 +10,7 @@ export const Dashboard = () => {
         Welcome <b>{`${user?.firstName} ${user?.lastName}`}</b>
       </h1>
       <h4 className="my-3">
-        Your role is : <b>{user?.role}</b>
+        Your role is: <b>{user?.role}</b>
       </h4>
       <p className="font-medium">In this application you can:</p>
       {user?.role === ROLES.USER && (
